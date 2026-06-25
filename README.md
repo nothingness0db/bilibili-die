@@ -4,7 +4,17 @@
 
 这个东西就是用来干这个的：我把我的黑名单导出来，一键拉黑，后面还会加人，黑名单会一直更新。你们也可以开你们的黑名单，毕竟我的黑名单非常的主观。
 
-用法见 [AGENTS.md](AGENTS.md)。
+## 给 Claude Code
+
+复制这段话发给 Claude Code：
+
+```
+克隆 https://github.com/nothingness0db/bilibili-die
+看 AGENTS.md，帮我拉黑这个仓库里的所有人。
+从我的浏览器 Cookie 里读 SESSDATA 和 bili_jct。
+```
+
+它会自己搞定。
 
 我也想分享我的黑名单
 
