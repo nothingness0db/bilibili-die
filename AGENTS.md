@@ -1,56 +1,49 @@
-# Agents
+# 用法
 
-本项目提供两个 B站黑名单自动化脚本，可配合 AI Agent 使用。
-
-## 工具
-
-### export.py — 导出黑名单
-
-从当前登录账号导出所有已拉黑用户，生成 `blacklist.json`。
+## 快速开始
 
 ```
-python export.py
+git clone https://github.com/nothingness0db/bilibili-die.git
+cd bilibili-die
+pip install -r requirements.txt
 ```
 
-输入：`config.json`（B站 Cookie）
-输出：`blacklist.json`
+然后去B站拿你的 Cookie：
 
-### block.py — 批量拉黑
-
-读取黑名单文件，批量拉黑所有用户。
-
-```
-python block.py [--file <路径>] [--dry-run] [--delay <秒>]
-```
-
-参数：
-- `--file` — 黑名单文件路径，默认 `blacklist.json`
-- `--dry-run` — 只预览不执行
-- `--delay` — 每次请求间隔，默认 1 秒
-
-## API 参考
-
-| 接口 | 方法 | 说明 |
-|------|------|------|
-| `/x/relation/blacks` | GET | 获取黑名单列表（分页） |
-| `/x/relation/modify` | POST | 拉黑（act=5）/ 取消拉黑（act=6） |
-
-认证：Cookie 中的 `SESSDATA` + `bili_jct`
-
-## Agent 调用示例
-
-Agent 可以直接调用这些脚本完成任务：
+1. 浏览器登录 bilibili.com
+2. F12 → Application → Cookies → `https://www.bilibili.com`
+3. 复制 `SESSDATA` 和 `bili_jct` 的值
 
 ```
-# 导出我的黑名单
-python export.py
+cp config.example.json config.json
+```
 
-# 预览将要拉黑的用户
-python block.py --dry-run
+编辑 `config.json`，把那两个值粘进去。
 
-# 执行批量拉黑
+然后：
+
+```
 python block.py
-
-# 拉黑指定文件中的用户
-python block.py --file other_blacklist.json
 ```
+
+它会先查一遍所有人的粉丝数，超过1万的列到 `review.md` 给你看一眼，确认了再拉黑。
+
+## 导出你自己的黑名单
+
+```
+python export.py
+```
+
+跑一次，你的黑名单就导出成 `blacklist.json` 了，推到 GitHub 就行。
+
+## 其他参数
+
+```
+python block.py --dry-run        # 只看不拉
+python block.py --skip-review    # 跳过确认直接全拉
+python block.py --delay 2        # 每次间隔2秒，防限流
+```
+
+## Claude Code 用法
+
+克隆仓库后直接开 Claude Code，它会自动读 AGENTS.md，告诉它"拉黑"就行。
